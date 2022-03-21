@@ -47,19 +47,19 @@ def CheckDir(storage):
 def CountDir(storage):
     return len(os.listdir(storage))
 
-def CountDb(dbin, table):
+def CountDb(dbin, table, portal_field, portal_value):
     con = mariadb.connect(**dbin)
     cursor = con.cursor()
-    cursor.execute("SELECT * FROM `"+table+"`;")
+    cursor.execute(f"SELECT * FROM {table} WHERE {portal_field} = {portal_value} ;")
     result = cursor.fetchall()
     total = len(result)
     con.close()
     return total
 
-def CountCompare(storage, dbin, table):
+def CountCompare(storage, dbin, table, portal_field, portal_value):
     storage_count = CountDir(storage)
     print('[DEBUG] Storage Count: '+str(storage_count))
-    record_count = CountDb(dbin, table)
+    record_count = CountDb(dbin, table, portal_field, portal_value)
     print('[DEBUG] Record Count: '+str(record_count))
     if storage_count == record_count:
         print('[DEBUG] Sync well!')
