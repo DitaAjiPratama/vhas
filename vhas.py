@@ -41,6 +41,9 @@ def CheckFileWidth(path):
     width = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
     return width
 
+def CheckDir(storage):
+    return os.path.isdir(storage)
+
 def CountDir(storage):
     return len(os.listdir(storage))
 
